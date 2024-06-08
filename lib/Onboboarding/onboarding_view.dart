@@ -31,7 +31,12 @@ class _OnboardingViewState extends State<OnboardingView> {
             //Skip Button
             TextButton(
                 onPressed: ()=>pageController.jumpToPage(controller.items.length-1),
-                child: const Text("Skip")),
+                child: const Text("Skip",style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+
+                ),),),
 
             //Indicator
             SmoothPageIndicator(
@@ -42,7 +47,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                 effect: const WormEffect(
                   dotHeight: 12,
                   dotWidth: 12,
-                  activeDotColor: primaryColor,
+                  activeDotColor: Colors.black,
                 ),
             ),
 
@@ -50,7 +55,12 @@ class _OnboardingViewState extends State<OnboardingView> {
             TextButton(
                 onPressed: ()=>pageController.nextPage(
                     duration: const Duration(milliseconds: 600), curve: Curves.easeIn),
-                child: const Text("Next")),
+                child: const Text("Next",style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+
+                ),)),
 
 
           ],
@@ -64,15 +74,19 @@ class _OnboardingViewState extends State<OnboardingView> {
             controller: pageController,
             itemBuilder: (context,index){
               return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Image.asset(controller.items[index].image),
-                  const SizedBox(height: 15),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 100,bottom: 20),
+                    child: Image.asset(controller.items[index].image),
+                  ),
+                  const SizedBox(height: 20,),
                   Text(controller.items[index].title,
                     style: const TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 15),
+
                   Text(controller.items[index].descriptions,
-                      style: const TextStyle(color: Colors.grey,fontSize: 17), textAlign: TextAlign.center),
+                      style: const TextStyle(color: Colors.black,fontSize: 17), textAlign: TextAlign.center),
+                  const SizedBox(height: 200,)
                 ],
               );
 
@@ -91,11 +105,17 @@ class _OnboardingViewState extends State<OnboardingView> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: primaryColor
+        color: Colors.black,
       ),
       width: MediaQuery.of(context).size.width * .9,
       height: 55,
       child: TextButton(
+        style: ButtonStyle(
+          foregroundColor: MaterialStateProperty.resolveWith(
+                  (state) => Colors.black),
+          backgroundColor: MaterialStateProperty.resolveWith(
+                  (state) => Colors.black)
+        ),
           onPressed: ()async{
             final pres = await SharedPreferences.getInstance();
             pres.setBool("onboarding", true);
@@ -105,7 +125,7 @@ class _OnboardingViewState extends State<OnboardingView> {
             if(!mounted)return;
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
           },
-          child: const Text("Get started",style: TextStyle(color: Colors.white),)),
+          child: const Text("Get started",style: TextStyle(color: Colors.white,fontSize: 20),)),
     );
  }
 }
